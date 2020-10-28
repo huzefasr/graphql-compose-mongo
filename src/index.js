@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import './utils/db';
 import schema from './schema';
 
-// dotenv.config();
+dotenv.config();
 
 const app = express();
 
@@ -36,6 +36,6 @@ server.applyMiddleware({
 });
 
 app.listen({ port: process.env.PORT || 4000 }, () => {
-    console.log(`🚀 Server listening on port ${process.env.PORT}`);
-    console.log(`😷 Health checks available at ${process.env.HEALTH_ENDPOINT}`);
+    console.log(`Server listening on port ${process.env.PORT}`);
+    console.log(`Health checks available at ${process.env.HEALTH_ENDPOINT}`);
 });
