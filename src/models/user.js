@@ -2,24 +2,65 @@ import mongoose, { Schema } from 'mongoose';
 import timestamps from 'mongoose-timestamp';
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 
+
+const FamilySchema = new Schema({
+  "name": String,
+  "type": {
+    type: String,
+    enum: ['adult', 'child'],
+  },
+  "hof": Boolean,
+  "its_id": Number,
+  "dob": String
+})
+
+
 export const UserSchema = new Schema(
-    {
-        name: {
-            type: String,
-            trim: true,
-            required: true,
-        },
-        email: {
-            type: String,
-            lowercase: true,
-            trim: true,
-            unique: true,
-            required: true,
-        },
+  {
+    its_id: {
+      type: Number,
+      trim: true,
+      required: true,
     },
-    {
-        collection: 'users',
+    mobile_no: {
+      type: Number,
+      lowercase: true,
+      trim: true,
+      unique: true,
+      required: true,
+    },
+    user_creation_status: {
+      type: Boolean,
+      default: true
+    },
+    imgurl: {
+      type: String,
+      lowercase: true,
+      trim: true,
+      unique: true,
+      required: true,
+    },
+    thaali_size: {
+      type: String,
+      enum: ['SMALL', 'MEDIUM', 'LARGE'],
+    },
+    family: [FamilySchema],
+    current_jamaat: {
+      type: Schema.Types.ObjectId,
+      ref: 'Jamaat'
+    },
+    status: {
+      type: String,
+      enum: ['active', 'deactive', 'suspended'],
+    },
+    statistics: {
+      type: Schema.Types.ObjectId,
+      ref: 'UserCompilation'
     }
+  },
+  {
+    collection: 'users',
+  }
 );
 
 UserSchema.plugin(timestamps);
