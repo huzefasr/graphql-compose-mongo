@@ -17,18 +17,56 @@ var _graphqlComposeMongoose = require("graphql-compose-mongoose");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const UserSchema = exports.UserSchema = new _mongoose.Schema({
-  name: {
+const FamilySchema = new _mongoose.Schema({
+  "name": String,
+  "type": {
     type: String,
+    enum: ['adult', 'child']
+  },
+  "hof": Boolean,
+  "its_id": Number,
+  "dob": String
+});
+const UserSchema = exports.UserSchema = new _mongoose.Schema({
+  its_id: {
+    type: Number,
     trim: true,
     required: true
   },
-  email: {
+  mobile_no: {
+    type: Number,
+    lowercase: true,
+    trim: true,
+    unique: true,
+    required: true
+  },
+  user_creation_status: {
+    type: Boolean,
+    default: true
+  },
+  imgurl: {
     type: String,
     lowercase: true,
     trim: true,
     unique: true,
     required: true
+  },
+  thaali_size: {
+    type: String,
+    enum: ['SMALL', 'MEDIUM', 'LARGE']
+  },
+  family: [FamilySchema],
+  current_jamaat: {
+    type: _mongoose.Schema.Types.ObjectId,
+    ref: 'Jamaat'
+  },
+  status: {
+    type: String,
+    enum: ['active', 'deactive', 'suspended']
+  },
+  statistics: {
+    type: _mongoose.Schema.Types.ObjectId,
+    ref: 'UserCompilation'
   }
 }, {
   collection: 'users'

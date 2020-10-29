@@ -8,8 +8,8 @@ const FamilySchema = new Schema({
   "type": {
     type: String,
     enum: ['adult', 'child'],
+    default: "adult"
   },
-  "hof": Boolean,
   "its_id": Number,
   "dob": String
 })
@@ -38,14 +38,14 @@ export const UserSchema = new Schema(
       lowercase: true,
       trim: true,
       unique: true,
-      required: true,
+      required: false,
     },
     thaali_size: {
       type: String,
       enum: ['SMALL', 'MEDIUM', 'LARGE'],
     },
     family: [FamilySchema],
-    current_jamaat: {
+    jamaat: {
       type: Schema.Types.ObjectId,
       ref: 'Jamaat'
     },

@@ -1,4 +1,4 @@
-const {dotenv} = require('dotenv');
+import dotenv from 'dotenv'
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 

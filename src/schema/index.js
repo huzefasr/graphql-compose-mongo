@@ -6,15 +6,24 @@ const schemaComposer = new SchemaComposer();
 
 import { UserQuery, UserMutation } from './user';
 import { TaskQuery, TaskMutation } from './task';
+import { MasterQuery, MasterMutation } from './master';
+import { JamaatQuery, JamaatMutation } from "./jamaat"
+import {FmbEventQuery, FmbEventMutation } from "./fmb_event"
 
 schemaComposer.Query.addFields({
-    ...UserQuery,
-    ...TaskQuery,
+    // ...UserQuery,
+    // ...TaskQuery,
+    ...MasterQuery,
+    ...JamaatQuery,
+    ...FmbEventQuery
 });
 
 schemaComposer.Mutation.addFields({
-    ...UserMutation,
-    ...TaskMutation,
+    // ...UserMutation,
+    // ...TaskMutation,
+    ...MasterMutation,
+    ...JamaatMutation,
+    ...FmbEventMutation
 });
 
 export default schemaComposer.buildSchema();

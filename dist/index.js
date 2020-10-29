@@ -22,7 +22,7 @@ const {
   dotenv
 } = require('dotenv');
 
-// dotenv.config();
+dotenv.config();
 const app = (0, _express2.default)();
 const server = new _apolloServerExpress.ApolloServer({
   schema: _schema2.default,
@@ -48,6 +48,6 @@ server.applyMiddleware({
 app.listen({
   port: process.env.PORT || 4000
 }, () => {
-  console.log(`🚀 Server listening on port ${process.env.PORT}`);
-  console.log(`😷 Health checks available at ${process.env.HEALTH_ENDPOINT}`);
+  console.log(`Server listening on port ${process.env.PORT}`);
+  console.log(`Health checks available at ${process.env.HEALTH_ENDPOINT}`);
 });
