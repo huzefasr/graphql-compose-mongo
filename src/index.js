@@ -8,16 +8,28 @@ import './utils/db';
 import schema from './schema';
 
 dotenv.config();
+import { jwtHandler } from './utils/jwtUtil'
+// dotenv.config();
 
 const app = express();
 
-const server = new ApolloServer({
+
+const server = new ApolloServer ({
     schema,
     cors: true,
     playground: process.env.NODE_ENV === 'development' ? true : false,
     introspection: true,
     tracing: true,
     path: '/',
+    context: ({req}) => {
+        // const token = req.headers.authorization || '';
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyMywicm9sZUlkIjoyLCJwZXJtaXNzaW9uIjpbeyJlbnRpdHkiOiJNYXN0ZXIiLCJsZXZlbCI6IjEifV19.DTtvFCuIj4_jewbmZ71-FGpQ9DusE_LEJP-gdBjKSHM"
+        if(token){
+            const decodedJwt = jwtHandler(token);
+            return { decodedJwt };
+        }
+        return {}
+    }
 });
 
 server.applyMiddleware({

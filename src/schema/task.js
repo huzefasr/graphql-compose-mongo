@@ -1,5 +1,10 @@
 import { Task, TaskTC } from '../models/task';
 
+
+function middleWare(){
+    console.log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOo")
+}
+
 const TaskQuery = {
     taskById: TaskTC.getResolver('findById'),
     taskByIds: TaskTC.getResolver('findByIds'),
@@ -11,7 +16,7 @@ const TaskQuery = {
 };
 
 const TaskMutation = {
-    taskCreateOne: TaskTC.getResolver('createOne'),
+    taskCreateOne: TaskTC.getResolver('createOne', middleWare),
     taskCreateMany: TaskTC.getResolver('createMany'),
     taskUpdateById: TaskTC.getResolver('updateById'),
     taskUpdateOne: TaskTC.getResolver('updateOne'),

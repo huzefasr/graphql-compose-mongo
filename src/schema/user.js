@@ -1,9 +1,15 @@
 import { User, UserTC } from '../models/user';
 
+async function authMiddleware(resolve, source, args, context, info) {
+    if (somehowCheckAuthInContext(context)){
+      return resolve(source, args, context, info);
+    }
+    throw new Error('You must be authorized');
+  }
 const UserQuery = {
-    userById: UserTC.getResolver('findById'),
+    userById: UserTC.getResolver('findById',),
     userByIds: UserTC.getResolver('findByIds'),
-    userOne: UserTC.getResolver('findOne'),
+    userOne: UserTC.getResolver('findOne',authMiddleware),
     userMany: UserTC.getResolver('findMany'),
     userCount: UserTC.getResolver('count'),
     userConnection: UserTC.getResolver('connection'),
