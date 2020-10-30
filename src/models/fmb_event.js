@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import timestamps from 'mongoose-timestamp';
 import { composeWithMongoose } from 'graphql-compose-mongoose';
+import { FmbEventStatistics, FmbEventStatisticsTC } from './fmb_event_statistics';
 
 export const MenuSchema = new Schema(
     {
@@ -58,5 +59,22 @@ FmbEventSchema.plugin(timestamps);
 FmbEventSchema.index({ createdAt: 1, updatedAt: 1 });
 
 export const FmbEvent = mongoose.model('Fmb_event', FmbEventSchema);
+
+
 export const FmbEventTC = composeWithMongoose(FmbEvent);
+
+FmbEventTC.addRelation(
+    'statistics',
+    {
+      resolver: () => FmbEventStatisticsTC.getResolver("findOne"),
+      prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
+        _ids: (source) => {
+            return source.statistics
+        }
+      },
+      projection: { _id: 1 }, // point fields in source object, which should be fetched from DB
+    }
+  );
+
+
 
