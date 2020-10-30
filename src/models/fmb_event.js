@@ -2,7 +2,25 @@ import mongoose, { Schema } from 'mongoose';
 import timestamps from 'mongoose-timestamp';
 import { composeWithMongoose } from 'graphql-compose-mongoose';
 
-import {MenuSchema} from "./menu"
+export const MenuSchema = new Schema(
+    {
+        // created_by:{
+        //     type: Schema.Types.ObjectId,
+        //     ref: "AamilSaheb" // change to members later
+        // },
+        jamaat: {
+            type: Schema.Types.ObjectId,
+            ref: "Jamaat"
+        },
+        dish1:String,
+        dish2:String,
+        roti:Boolean,
+        chawal:Boolean,
+    },
+    {
+        collection: "menu"
+    }
+);
 
 export const FmbEventSchema = new Schema (
     {
@@ -41,3 +59,4 @@ FmbEventSchema.index({ createdAt: 1, updatedAt: 1 });
 
 export const FmbEvent = mongoose.model('Fmb_event', FmbEventSchema);
 export const FmbEventTC = composeWithMongoose(FmbEvent);
+

@@ -1,5 +1,9 @@
 "use strict";
 
+var _dotenv = require("dotenv");
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
@@ -16,13 +20,12 @@ var _schema = require("./schema");
 
 var _schema2 = _interopRequireDefault(_schema);
 
+var _jwtUtil = require("./utils/jwtUtil");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const {
-  dotenv
-} = require('dotenv');
+_dotenv2.default.config();
 
-dotenv.config();
 const app = (0, _express2.default)();
 const server = new _apolloServerExpress.ApolloServer({
   schema: _schema2.default,
@@ -30,7 +33,22 @@ const server = new _apolloServerExpress.ApolloServer({
   playground: process.env.NODE_ENV === 'development' ? true : false,
   introspection: true,
   tracing: true,
-  path: '/'
+  path: '/',
+  context: ({
+    req
+  }) => {
+    // const token = req.headers.authorization || '';
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyMywicm9sZUlkIjoyLCJqYW1hYXQiOiI1ZjlhZGMwMzU2NjNiNjA3MTRiZjNhM2EiLCJwZXJtaXNzaW9uIjpbeyJlbnRpdHkiOiJVc2VyIiwibGV2ZWwiOiIxIn1dfQ.gQ1y5SggtqLhxCldSjif83LAmVr5ngRgIt9eWBZ6lzY";
+
+    if (token) {
+      const decodedJwt = (0, _jwtUtil.jwtHandler)(token);
+      return {
+        decodedJwt
+      };
+    }
+
+    return {};
+  }
 });
 server.applyMiddleware({
   app,

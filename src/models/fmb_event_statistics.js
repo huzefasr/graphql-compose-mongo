@@ -25,16 +25,22 @@ export const FmbEventStatisticsSchema = new Schema (
        total_count:[MiniUserSchema],
        blacklisted:[MiniUserSchema],
        actual_count:[MiniUserSchema],
-       false_positive: Number,
-       postiive_false: Number
+       false_positive: {
+           type: Number,
+           default: 0
+       },
+       postiive_false: {
+            type: Number,
+            default: 0
+       }
     },
     {
-        collection: 'Fmb_event_statistics',
+        collection: 'fmb_event_statistics',
     }
 );
 
 
 FmbEventStatisticsSchema.index({ createdAt: 1, updatedAt: 1 });
 
-export const FmbEventStatistics = mongoose.model('Fmb_event_statistics', FmbEventStatisticsSchema);
+export const FmbEventStatistics = mongoose.model('fmb_event_statistics', FmbEventStatisticsSchema);
 export const FmbEventStatisticsTC = composeWithMongoose(FmbEventStatistics);

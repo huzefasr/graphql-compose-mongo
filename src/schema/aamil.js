@@ -14,4 +14,4 @@ const AamilSahebMutation = {
     editAamil_saheb: AamilSahebTC.getResolver('updateById'),
 };
 
-export { JamaatQuery, JamaatMutation };
+export { AamilSahebQuery, AamilSahebMutation };

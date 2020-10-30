@@ -21,9 +21,9 @@ const FamilySchema = new _mongoose.Schema({
   "name": String,
   "type": {
     type: String,
-    enum: ['adult', 'child']
+    enum: ['adult', 'child'],
+    default: "adult"
   },
-  "hof": Boolean,
   "its_id": Number,
   "dob": String
 });
@@ -49,14 +49,14 @@ const UserSchema = exports.UserSchema = new _mongoose.Schema({
     lowercase: true,
     trim: true,
     unique: true,
-    required: true
+    required: false
   },
   thaali_size: {
     type: String,
     enum: ['SMALL', 'MEDIUM', 'LARGE']
   },
   family: [FamilySchema],
-  current_jamaat: {
+  jamaat: {
     type: _mongoose.Schema.Types.ObjectId,
     ref: 'Jamaat'
   },
