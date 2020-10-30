@@ -2,6 +2,29 @@ import { User, UserTC } from '../models/user';
 import { authMiddleware } from '../utils/authenticationHelper'
 
 
+UserTC.addResolver({
+    kind: 'query',
+    name: 'findManyWithJamaat',
+    type: UserTC,
+    resolve: async ({ args, context }) => {
+        return await User.findOne({"its_id": 100}).populate('jamaat')
+    },
+})
+
+
+UserTC.addResolver({
+    kind: 'mutation',
+    name: 'createIt',
+    type: UserTC,
+    args: {
+        record : UserTC.getInputType()
+    },
+    resolve: async ({ args, context }) => {
+        console.log("args", args)
+        return await User.findOne({"its_id": 100}).populate('jamaat')
+    },
+})
+
 function wrapperResolver(query){
     return UserTC.getResolver(query, [ (resolve, source, args, context, info) =>{
 
@@ -24,6 +47,8 @@ const UserQuery = {
     userCount: wrapperResolver('count'),
     userConnection: wrapperResolver('connection'),
     userPagination: wrapperResolver('pagination'),
+    uJamaat: UserTC.getResolver('findManyWithJamaat')
+
 };
 
 const UserMutation = {
@@ -35,6 +60,7 @@ const UserMutation = {
     userRemoveById: UserTC.getResolver('removeById'),
     userRemoveOne: UserTC.getResolver('removeOne'),
     userRemoveMany: UserTC.getResolver('removeMany'),
+    createIt: UserTC.getResolver('createIt')
 };
 
 export { UserQuery, UserMutation };

@@ -8,7 +8,7 @@ function authMiddleware(resolve, source, args, context, info, entity) {
     let userPermission = fetchPermission(context, entity);
     switch (info.path.typename) {
         case 'Query':
-            if(userPermission.level == 1)
+            if(userPermission.level >= 1)
                 return resolve(source, args, context, info)
             throw new Error('Unauthorized'); 
         case 'Mutation':
