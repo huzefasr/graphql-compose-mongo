@@ -1,8 +1,14 @@
 import {MasterTC} from '../models/master';
 
+function wrapperResolver(query){
+    return MasterTC.getResolver(query, [ (resolve, source, args, context, info) =>{
+        authMiddleware(resolve, source, args, context, info, 'Master')
+    }])
+}
+
 const MasterQuery = {
-    masters: MasterTC.getResolver('findMany'),
-    masterById: MasterTC.getResolver('findById'),
+    masters: wrapperResolver('findMany'),
+    masterById: wrapperResolver('findById'),
 };
 
 const MasterMutation = {

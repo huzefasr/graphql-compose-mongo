@@ -11,7 +11,7 @@ import { JamaatQuery, JamaatMutation } from "./jamaat"
 import {FmbEventQuery, FmbEventMutation } from "./fmb_event"
 
 schemaComposer.Query.addFields({
-    // ...UserQuery,
+    ...UserQuery,
     // ...TaskQuery,
     ...MasterQuery,
     ...JamaatQuery,
@@ -19,7 +19,7 @@ schemaComposer.Query.addFields({
 });
 
 schemaComposer.Mutation.addFields({
-    // ...UserMutation,
+    ...UserMutation,
     // ...TaskMutation,
     ...MasterMutation,
     ...JamaatMutation,

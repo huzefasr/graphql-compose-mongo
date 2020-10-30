@@ -1,13 +1,29 @@
 import { User, UserTC } from '../models/user';
+import { authMiddleware } from '../utils/authenticationHelper'
+
+
+function wrapperResolver(query){
+    return UserTC.getResolver(query, [ (resolve, source, args, context, info) =>{
+
+        const fixedFilters = {
+            jamaat: context.decodedJwt.jamaat
+        }
+
+        args.filter = { ...args.filter, ...fixedFilters}
+        return authMiddleware(resolve, source, args , context, info, 'User')
+    }])
+}
+
+
 
 const UserQuery = {
-    userById: UserTC.getResolver('findById'),
-    userByIds: UserTC.getResolver('findByIds'),
-    userOne: UserTC.getResolver('findOne'),
-    userMany: UserTC.getResolver('findMany'),
-    userCount: UserTC.getResolver('count'),
-    userConnection: UserTC.getResolver('connection'),
-    userPagination: UserTC.getResolver('pagination'),
+    userById: wrapperResolver('findById'),
+    userByIds: wrapperResolver('findByIds'),
+    userOne: wrapperResolver('findOne'),
+    userMany: wrapperResolver('findMany'),
+    userCount: wrapperResolver('count'),
+    userConnection: wrapperResolver('connection'),
+    userPagination: wrapperResolver('pagination'),
 };
 
 const UserMutation = {

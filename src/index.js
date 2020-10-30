@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 
 import './utils/db';
 import schema from './schema';
+import { jwtHandler } from './utils/jwtUtil'
+
 
 dotenv.config();
 
@@ -18,6 +20,15 @@ const server = new ApolloServer({
     introspection: true,
     tracing: true,
     path: '/',
+    context: ({req}) => {
+        // const token = req.headers.authorization || '';
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyMywicm9sZUlkIjoyLCJqYW1hYXQiOiI1ZjlhZGMwMzU2NjNiNjA3MTRiZjNhM2EiLCJwZXJtaXNzaW9uIjpbeyJlbnRpdHkiOiJVc2VyIiwibGV2ZWwiOiIxIn1dfQ.gQ1y5SggtqLhxCldSjif83LAmVr5ngRgIt9eWBZ6lzY"
+        if(token){
+            const decodedJwt = jwtHandler(token);
+            return { decodedJwt };
+        }
+        return {}
+    }
 });
 
 server.applyMiddleware({
