@@ -1,21 +1,10 @@
-<<<<<<< Updated upstream
 import {FmbEvent,FmbEventTC} from '../models/fmb_event';
-=======
-import {FmbEvent, FmbEventTC} from '../models/fmb_event';
-import {FmbEventStatistics} from "../models/fmb_event_statistics"
-// FmbEventTC.removeField("menu")
-// FmbEventTC.addFields({
-//     menu_details: MenuTC
-// })
-
->>>>>>> Stashed changes
 
 export const FmbEventQuery = {
     fmb_events: wrapperResolver('findMany'),
     fmb_event: FmbEventTC.getResolver('findById'),
 };
 
-<<<<<<< Updated upstream
 
 FmbEventTC.addResolver({
     kind: 'mutation',
@@ -30,8 +19,6 @@ FmbEventTC.addResolver({
     },
 })
 
-FmbEventTC.wrapResolverResolve('createOne', next => async rp => {
-=======
 function wrapperResolver(query){
     return FmbEventTC.getResolver(query, [ (resolve, source, args, context, info) =>{
         console.log(FmbEventTC.getInputTypeComposer())
@@ -46,7 +33,6 @@ function wrapperResolver(query){
 
 
 FmbEventTC.wrapResolverResolve('findMany', next => async rp => {
->>>>>>> Stashed changes
 
     rp.beforeRecordMutate = async (doc, resolveParams) => {
         console.log("assssssssssssss",doc)
@@ -58,29 +44,10 @@ FmbEventTC.wrapResolverResolve('findMany', next => async rp => {
     return next(rp);
 });
 
-FmbEventTC.addResolver({
-    kind: "mutation",
-    name: "createOneWrapper",
-    args: {record: FmbEventTC.getInputType()},
-    type: FmbEventTC,
-    resolve: async({args,context}) => {
-        console.log(args)
-        // console.log(args)
-        // let fmbEvent = await FmbEvent.create(args)
-        // let fmbeventStats = await FmbEventStatistics.create({
-        //     event_id: fmbEvent.id,
-        // })
-        // fmbEvent.statistics = fmbeventStats.id
-        // fmbeventStats.save()
-        // fmbEvent.save()
-
-        return await FmbEvent.find();
-    }
-})
 
 export const FmbEventMutation = {
-    createFmbEvent:  FmbEventTC.getResolver("createOneWrapper"),
+    createFmbEvent:  FmbEventTC.getResolver("createOne"),
     editFmbEvent: FmbEventTC.getResolver("updateById"),
     removeFmbEvent: FmbEventTC.getResolver('removeOne'),
     createFmb: FmbEventTC.getResolver('createFmb')
-};
+}
