@@ -21,10 +21,19 @@ export const FmbEventStatisticsSchema = new Schema (
            type: Schema.Types.ObjectId,
            ref: "Fmb_event",
            required: true
-       },
-       total_count:[MiniUserSchema],
-       blacklisted:[MiniUserSchema],
-       actual_count:[MiniUserSchema],
+        },
+       total_count:{
+        type: [Schema.Types.ObjectId],
+        ref: "User",
+        },
+       blacklisted:[{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        }],
+       actual_count:{
+        type: [Schema.Types.ObjectId],
+        ref: "User",
+        },
        false_positive: {
            type: Number,
            default: 0

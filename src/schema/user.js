@@ -83,7 +83,6 @@ const UserQuery = {
     userConnection: wrapperResolver('connection'),
     userPagination: wrapperResolver('pagination'),
     login: UserTC.getResolver('login')
-
 };
 
 const UserMutation = {

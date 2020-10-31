@@ -66,13 +66,15 @@ export const FmbEventTC = composeWithMongoose(FmbEvent);
 FmbEventTC.addRelation(
     'statistics',
     {
-      resolver: () => FmbEventStatisticsTC.getResolver("findOne"),
+      resolver: (_id) => {
+        console.log(_id)
+        return FmbEventStatisticsTC.getResolver("findOne")},
       prepareArgs: { // resolver `findByIds` has `_ids` arg, let provide value to it
-        _ids: (source) => {
-            return source.statistics
-        }
+        filter: (source) => ({
+            _id: source.statistics
+        })
       },
-      projection: { _id: 1 }, // point fields in source object, which should be fetched from DB
+      projection: { statistics: 1 }, // point fields in source object, which should be fetched from DB
     }
   );
 

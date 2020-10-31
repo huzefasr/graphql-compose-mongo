@@ -12,9 +12,9 @@ const MasterQuery = {
 };
 
 const MasterMutation = {
-    createMaster: MasterTC.getResolver('createOne'),
+    createMaster: MasterTC.getResolver("createOne"),
     editMaster: MasterTC.getResolver("updateById"),
-    removeMaster: MasterTC.getResolver('removeOne'),
+    removeMaster: MasterTC.getResolver("removeOne"),
 };
 
 export { MasterQuery, MasterMutation };
