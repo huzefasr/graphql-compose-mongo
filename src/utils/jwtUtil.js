@@ -1,5 +1,19 @@
 const jwt = require("jsonwebtoken");
-const { jwtConfig } = require('../../config') 
+const { jwtConfig } = require('../../config');
+const _ = require('lodash');
+
+function createJwt(data){
+  try{
+    let pickedData = _.pick(data, ['its_id', 'jamaat', '_id','role'])
+    let token = jwt.sign(pickedData, jwtConfig.secret);
+    console.log("createJwt -> token", token)
+    return { token }
+  }catch(err){
+    console.log("createJwt -> err", err)
+    throw err;
+  }
+}
+
 
 function jwtHandler(token) {
   try {
@@ -12,4 +26,4 @@ function jwtHandler(token) {
 }
 
 
-export { jwtHandler }
+export { jwtHandler , createJwt }

@@ -22,6 +22,10 @@ export const UserSchema = new Schema(
       trim: true,
       required: true,
     },
+    password :{
+      type: String,
+      bcrypt: true
+    },
     mobile_no: {
       type: Number,
       lowercase: true,
@@ -64,6 +68,8 @@ export const UserSchema = new Schema(
 );
 
 UserSchema.plugin(timestamps);
+UserSchema.plugin(require('mongoose-bcrypt'),{ rounds : 8})
+
 
 UserSchema.index({ createdAt: 1, updatedAt: 1 });
 
