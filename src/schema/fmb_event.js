@@ -2,11 +2,11 @@ import {FmbEvent,FmbEventTC} from '../models/fmb_event';
 import {FmbEventStatistics} from "../models/fmb_event_statistics"
 import {popElement} from "../utils/helpers"
 import mongoose from "mongoose"
+
 export const FmbEventQuery = {
     fmb_events: FmbEventTC.getResolver('findMany'),
-    fmb_event: FmbEventTC.getResolver('findById'),
+    fmb_event: FmbEventTC.getResolver('findOne')
 };
-
 
 FmbEventTC.addResolver({
     kind: 'mutation',
@@ -49,10 +49,7 @@ FmbEventTC.addResolver({
     resolve: async ({ args, context }) => {
         try{
             let user_id = context.decodedJwt._id
-            user_id = "5f9d49bb3e4aae1470e63126"
-            // let stats = await FmbEventStatistics.findOne({event_id: args.record.event_id})
-            let id = mongoose.Types.ObjectId(user_id);
-            console.log(args.record.event_id)
+            // let id = mongoose.Types.ObjectId(user_id);
             if(args.record.attending){
                 await FmbEventStatistics.updateOne(
                     { event_id: args.record.event_id },

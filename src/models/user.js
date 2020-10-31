@@ -22,6 +22,15 @@ export const UserSchema = new Schema(
       trim: true,
       required: true,
     },
+    first_name: {
+      type: String
+    },
+    last_name: {
+      type: String
+    },
+    address: {
+      type: String
+    },
     password :{
       type: String,
       bcrypt: true

@@ -33,6 +33,10 @@ const UserSchema = exports.UserSchema = new _mongoose.Schema({
     trim: true,
     required: true
   },
+  password: {
+    type: String,
+    bcrypt: true
+  },
   mobile_no: {
     type: Number,
     lowercase: true,
@@ -72,6 +76,9 @@ const UserSchema = exports.UserSchema = new _mongoose.Schema({
   collection: 'users'
 });
 UserSchema.plugin(_mongooseTimestamp2.default);
+UserSchema.plugin(require('mongoose-bcrypt'), {
+  rounds: 8
+});
 UserSchema.index({
   createdAt: 1,
   updatedAt: 1

@@ -14,14 +14,26 @@ var _user = require("./user");
 
 var _task = require("./task");
 
+var _master = require("./master");
+
+var _jamaat = require("./jamaat");
+
+var _fmb_event = require("./fmb_event");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // eslint-disable-line no-unused-vars
 const schemaComposer = new _graphqlCompose.SchemaComposer();
 schemaComposer.Query.addFields({ ..._user.UserQuery,
-  ..._task.TaskQuery
+  // ...TaskQuery,
+  ..._master.MasterQuery,
+  ..._jamaat.JamaatQuery,
+  ..._fmb_event.FmbEventQuery
 });
 schemaComposer.Mutation.addFields({ ..._user.UserMutation,
-  ..._task.TaskMutation
+  // ...TaskMutation,
+  ..._master.MasterMutation,
+  ..._jamaat.JamaatMutation,
+  ..._fmb_event.FmbEventMutation
 });
 exports.default = schemaComposer.buildSchema();

@@ -14,8 +14,7 @@ const LoginCredentialsInput = `
 input LoginCredentials {
     its_id : Int!
     password: String!
-} 
-
+}
 `
 
 
