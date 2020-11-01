@@ -33,14 +33,12 @@ UserTC.addResolver({
         console.log("data", userData)
         let isValid = userData.verifyPasswordSync(args.filter.password)
         console.log("isValid", isValid)
-        let permissionData = await Roles.findOne({type: 'Users'}, {projection: { _id: 0, permissions: 1}})
-        userData.permissions = permissionData.permissions;
+        // let permissionData = await Roles.findOne({type: 'Users'}, {projection: { _id: 0, permissions: 1}})
+        // userData.permissions = permissionData.permissions;
         if(userData && !_.isEmpty(userData) && isValid){
             return createJwt(userData)
         }else{
-            throw new Error({
-                message: "Authorization Failed"
-            })
+            throw   "Authorization Failed"
         }
     },
 })
@@ -61,10 +59,14 @@ UserTC.addResolver({
 
 function wrapperResolver(query){
     return UserTC.getResolver(query, [ (resolve, source, args, context, info) =>{
+        let fixedFilters = {}
+        if(context.decodedJwt.jamaat){
+            fixedFilters = {
+                jamaat: context.decodedJwt.jamaat
+            }
 
-        const fixedFilters = {
-            jamaat: context.decodedJwt.jamaat
         }
+        console.log("wrapperResolver -> fixedFilters", fixedFilters)
 
         args.filter = { ...args.filter, ...fixedFilters}
         return authMiddleware(resolve, source, args , context, info, 'User')

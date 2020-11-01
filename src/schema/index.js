@@ -9,13 +9,15 @@ import { TaskQuery, TaskMutation } from './task';
 import { MasterQuery, MasterMutation } from './master';
 import { JamaatQuery, JamaatMutation } from "./jamaat"
 import {FmbEventQuery, FmbEventMutation } from "./fmb_event"
+import {RoleQuery, RoleMutation } from './roles'
 
 schemaComposer.Query.addFields({
     ...UserQuery,
     // ...TaskQuery,
     ...MasterQuery,
     ...JamaatQuery,
-    ...FmbEventQuery
+    ...FmbEventQuery,
+    ...RoleQuery
 });
 
 schemaComposer.Mutation.addFields({
@@ -23,7 +25,8 @@ schemaComposer.Mutation.addFields({
     // ...TaskMutation,
     ...MasterMutation,
     ...JamaatMutation,
-    ...FmbEventMutation
+    ...FmbEventMutation,
+    ...RoleMutation
 });
 
 export default schemaComposer.buildSchema();
