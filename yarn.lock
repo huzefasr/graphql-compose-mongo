@@ -3144,7 +3144,7 @@
 "graphql-type-json@0.3.2":
   "version" "0.3.2"
 
-"graphql-upload@^8.0.2":
+"graphql-upload@^8.0.2", "graphql-upload@^8.1.0":
   "version" "8.1.0"
   dependencies:
     "busboy" "^0.3.1"

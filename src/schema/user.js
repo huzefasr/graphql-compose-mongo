@@ -3,12 +3,29 @@ import { authMiddleware } from '../utils/authenticationHelper'
 import * as _ from 'lodash'
 import { createJwt } from '../utils/jwtUtil'
 import { Roles } from '../models/roles';
+const path = require("path")
+const fs = require("fs")
+const { GraphQLList, GraphQLObjectType, GraphQLNonNull } = require('graphql');
+const { GraphQLUpload } = require('graphql-upload');
 
 const AuthorizationDataSchema = `
     type AuthorizationData {
         token: String!
     }
 `
+
+const fileInputSchema = `
+input fileInputSchema {
+    file : GraphQLNonNull(GraphQLUpload)
+}
+`
+
+const FileOutputSchema = `
+    type fileSchema {
+        messege: String
+    }
+`
+
 
 const LoginCredentialsInput = `
 input LoginCredentials {
@@ -33,8 +50,8 @@ UserTC.addResolver({
         console.log("data", userData)
         let isValid = userData.verifyPasswordSync(args.filter.password)
         console.log("isValid", isValid)
-        let permissionData = await Roles.findOne({type: 'Users'}, {projection: { _id: 0, permissions: 1}})
-        userData.permissions = permissionData.permissions;
+        // let permissionData = await Roles.findOne({type: 'Users'}, {projection: { _id: 0, permissions: 1}})
+        // userData.permissions = permissionData.permissions;
         if(userData && !_.isEmpty(userData) && isValid){
             return createJwt(userData)
         }else{
@@ -45,19 +62,32 @@ UserTC.addResolver({
     },
 })
 
-
 UserTC.addResolver({
     kind: 'mutation',
-    name: 'createIt',
-    type: UserTC,
+    name: 'uploadFile',
+    type: FileOutputSchema,
+
     args: {
-        record : UserTC.getInputType()
+       filter: fileInputSchema    
     },
     resolve: async ({ args, context }) => {
-        console.log("args", args)
-        return await User.findOne({"its_id": 100}).populate('jamaat')
-    },
+       console.log(args)
+       return {messege:"ok"}
+    }
 })
+
+// UserTC.addResolver({
+//     kind: 'mutation',
+//     name: 'createIt',
+//     type: UserTC,
+//     args: {
+//         record : UserTC.getInputType()
+//     },
+//     resolve: async ({ args, context }) => {
+//         console.log("args", args)
+//         return {messege:}
+//     },
+// })
 
 function wrapperResolver(query){
     return UserTC.getResolver(query, [ (resolve, source, args, context, info) =>{
@@ -93,7 +123,7 @@ const UserMutation = {
     userRemoveById: UserTC.getResolver('removeById'),
     userRemoveOne: UserTC.getResolver('removeOne'),
     userRemoveMany: UserTC.getResolver('removeMany'),
-    createIt: UserTC.getResolver('createIt')
+    uploadFile: UserTC.getResolver('uploadFile')
 };
 
 export { UserQuery, UserMutation };

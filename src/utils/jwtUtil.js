@@ -4,7 +4,8 @@ const _ = require('lodash');
 
 function createJwt(data){
   try{
-    let pickedData = _.pick(data, ['its_id', 'jamaat', '_id','role'])
+    let pickedData = _.pick(data, ['its_id', 'jamaat', '_id'])
+    console.log(pickedData)
     let token = jwt.sign(pickedData, jwtConfig.secret);
     console.log("createJwt -> token", token)
     return { token }
