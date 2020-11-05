@@ -7,6 +7,8 @@ const path = require("path")
 const fs = require("fs")
 const { GraphQLList, GraphQLObjectType, GraphQLNonNull } = require('graphql');
 const { GraphQLUpload } = require('graphql-upload');
+const { ApolloServer, gql } = require('apollo-server');
+
 
 const AuthorizationDataSchema = `
     type AuthorizationData {
@@ -16,7 +18,7 @@ const AuthorizationDataSchema = `
 
 const fileInputSchema = `
 input fileInputSchema {
-    file : GraphQLNonNull(GraphQLUpload)
+    file : Upload!
 }
 `
 

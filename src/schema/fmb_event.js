@@ -41,7 +41,7 @@ type scanOutput {
 
 FmbEventTC.addResolver({
     kind: 'mutation',
-    name: 'userUpdateScanStatus',
+    name: 'userUpdateScanStatusNotTaking',
     type: output,
     args: {
         record : markScanInput
@@ -72,6 +72,31 @@ FmbEventTC.addResolver({
         
     },
 })
+
+FmbEventTC.addResolver({
+    kind: 'mutation',
+    name: 'userUpdateScanStatusTaken',
+    type: output,
+    args: {
+        record : markScanInput
+    },
+    resolve: async ({ args, context }) => {
+        try{
+            let user_id = context.decodedJwt._id
+            await FmbEventStatistics.updateOne(
+                { event_id: args.record.event_id },
+                { $addToSet: { actual_count: user_id }
+                }
+            );
+            return {status: true}
+        } catch(err){
+            console.log(err)
+            return {status: false}
+        }
+        
+    },
+})
+
 
 
 function wrapperResolver(query){
@@ -105,5 +130,6 @@ export const FmbEventMutation = {
     createFmbEvent:  FmbEventTC.getResolver("createOneWrapper"),
     editFmbEvent: FmbEventTC.getResolver("updateById"),
     removeFmbEvent: FmbEventTC.getResolver('removeOne'),
-    userUpdateScanStatus: FmbEventTC.getResolver("userUpdateScanStatus")
+    userUpdateScanStatusNotTaking: FmbEventTC.getResolver("userUpdateScanStatusNotTaking"),
+    userUpdateScanStatusTaken: FmbEventTC.getResolver("userUpdateScanStatusTaken")
 }
