@@ -50,8 +50,6 @@ export const UserSchema = new Schema(
       type: String,
       lowercase: true,
       trim: true,
-      unique: true,
-      required: false,
     },
     thaali_size: {
       type: String,
