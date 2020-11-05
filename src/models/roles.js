@@ -28,11 +28,11 @@ export const RolesSchema = new Schema (
             ref: "Jamaat"
         },
         permission: {
-            type: PermissionSchema,
+            type: [PermissionSchema],
         }
     },
     {
-        collection: 'roles14',
+        collection: 'roles',
     }
 );
 

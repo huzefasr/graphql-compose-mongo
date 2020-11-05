@@ -55,9 +55,7 @@ UserTC.addResolver({
         if(userData && !_.isEmpty(userData) && isValid){
             return createJwt(userData)
         }else{
-            throw new Error({
-                message: "Authorization Failed"
-            })
+            throw   "Authorization Failed"
         }
     },
 })
@@ -91,10 +89,14 @@ UserTC.addResolver({
 
 function wrapperResolver(query){
     return UserTC.getResolver(query, [ (resolve, source, args, context, info) =>{
+        let fixedFilters = {}
+        if(context.decodedJwt.jamaat){
+            fixedFilters = {
+                jamaat: context.decodedJwt.jamaat
+            }
 
-        const fixedFilters = {
-            jamaat: context.decodedJwt.jamaat
         }
+        console.log("wrapperResolver -> fixedFilters", fixedFilters)
 
         args.filter = { ...args.filter, ...fixedFilters}
         return authMiddleware(resolve, source, args , context, info, 'User')
