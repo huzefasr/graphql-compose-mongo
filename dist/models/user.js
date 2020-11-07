@@ -33,6 +33,18 @@ const UserSchema = exports.UserSchema = new _mongoose.Schema({
     trim: true,
     required: true
   },
+  first_name: {
+    type: String,
+    required: true
+  },
+  last_name: {
+    type: String,
+    required: true
+  },
+  address: {
+    type: String,
+    required: true
+  },
   password: {
     type: String,
     bcrypt: true
@@ -51,9 +63,7 @@ const UserSchema = exports.UserSchema = new _mongoose.Schema({
   imgurl: {
     type: String,
     lowercase: true,
-    trim: true,
-    unique: true,
-    required: false
+    trim: true
   },
   thaali_size: {
     type: String,

@@ -24,6 +24,7 @@
     "@babel/node": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "apollo-engine": "^1.1.2",
+    "apollo-server": "^2.19.0",
     "apollo-server-express": "^2.18.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
