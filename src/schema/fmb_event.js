@@ -29,7 +29,7 @@ FmbEventTC.addResolver({
 
 const markScanInput = `
 input scanInput {
-    event_id: String!
+    event_id: String
     user_id: String
     attending: Boolean!
 }
@@ -82,7 +82,8 @@ FmbEventTC.addResolver({
   resolve: async ({ args, context }) => {
     try {
       let user_id = args.record.user_id;
-      if (isNull(args.record.user_id)) {
+      console.log(args.record);
+      if (args.record.user_id != null) {
         await FmbEventStatistics.updateOne(
           { event_id: args.record.event_id },
           { $addToSet: { actual_count: user_id } }
