@@ -15,6 +15,12 @@ const FamilySchema = new Schema({
 })
 
 
+const AddressSchema = new Schema({
+  building: String,
+  roomNo: String,
+
+})
+
 export const UserSchema = new Schema(
   {
     its_id: {
@@ -24,15 +30,12 @@ export const UserSchema = new Schema(
     },
     first_name: {
       type: String,
-      required: true
     },
     last_name: {
       type: String,
-      required: true
     },
     address: {
-      type: String,
-      required: true
+      type: AddressSchema
     },
     password :{
       type: String,
@@ -43,7 +46,6 @@ export const UserSchema = new Schema(
       lowercase: true,
       trim: true,
       unique: true,
-      required: true,
     },
     user_creation_status: {
       type: Boolean,
@@ -59,6 +61,7 @@ export const UserSchema = new Schema(
       enum: ['SMALL', 'MEDIUM', 'LARGE'],
     },
     family: [FamilySchema],
+    familyCount: Number,
     jamaat: {
       type: Schema.Types.ObjectId,
       ref: 'Jamaat'
