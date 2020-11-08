@@ -1,25 +1,22 @@
-import mongoose, { Schema } from 'mongoose';
-import timestamps from 'mongoose-timestamp';
-import { composeWithMongoose } from 'graphql-compose-mongoose';
-
+import mongoose, { Schema } from "mongoose";
+import timestamps from "mongoose-timestamp";
+import { composeWithMongoose } from "graphql-compose-mongoose";
 
 const FamilySchema = new Schema({
-  "name": String,
-  "type": {
+  name: String,
+  type: {
     type: String,
-    enum: ['adult', 'child'],
-    default: "adult"
+    enum: ["adult", "child"],
+    default: "adult",
   },
-  "its_id": Number,
-  "dob": String
-})
-
+  its_id: Number,
+  dob: String,
+});
 
 const AddressSchema = new Schema({
   building: String,
   roomNo: String,
-
-})
+});
 
 export const UserSchema = new Schema(
   {
@@ -27,29 +24,27 @@ export const UserSchema = new Schema(
       type: Number,
       trim: true,
       required: true,
+      unique: true,
     },
-    first_name: {
+    full_name: {
       type: String,
-    },
-    last_name: {
-      type: String,
+      required: true,
     },
     address: {
-      type: AddressSchema
+      type: AddressSchema,
+      required: true,
     },
-    password :{
+    password: {
       type: String,
-      bcrypt: true
+      bcrypt: true,
     },
     mobile_no: {
       type: Number,
-      lowercase: true,
       trim: true,
-      unique: true,
     },
     user_creation_status: {
       type: Boolean,
-      default: true
+      default: true,
     },
     imgurl: {
       type: String,
@@ -58,33 +53,32 @@ export const UserSchema = new Schema(
     },
     thaali_size: {
       type: String,
-      enum: ['SMALL', 'MEDIUM', 'LARGE'],
+      enum: ["SMALL", "MEDIUM", "LARGE"],
     },
     family: [FamilySchema],
     familyCount: Number,
     jamaat: {
       type: Schema.Types.ObjectId,
-      ref: 'Jamaat'
+      ref: "Jamaat",
     },
     status: {
       type: String,
-      enum: ['active', 'deactive', 'suspended'],
+      enum: ["active", "deactive", "suspended"],
     },
     statistics: {
       type: Schema.Types.ObjectId,
-      ref: 'UserCompilation'
-    }
+      ref: "UserCompilation",
+    },
   },
   {
-    collection: 'users',
+    collection: "users",
   }
 );
 
 UserSchema.plugin(timestamps);
-UserSchema.plugin(require('mongoose-bcrypt'),{ rounds : 8})
-
+UserSchema.plugin(require("mongoose-bcrypt"), { rounds: 8 });
 
 UserSchema.index({ createdAt: 1, updatedAt: 1 });
 
-export const User = mongoose.model('User', UserSchema);
+export const User = mongoose.model("User", UserSchema);
 export const UserTC = composeWithMongoose(User);

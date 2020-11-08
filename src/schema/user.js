@@ -104,13 +104,13 @@ function wrapperResolver(query) {
 }
 
 const UserQuery = {
-  userById: wrapperResolver("findById"),
-  userByIds: wrapperResolver("findByIds"),
-  userOne: wrapperResolver("findOne"),
-  userMany: wrapperResolver("findMany"),
-  userCount: wrapperResolver("count"),
-  userConnection: wrapperResolver("connection"),
-  userPagination: wrapperResolver("pagination"),
+  userById: UserTC.getResolver("findById"),
+  userByIds: UserTC.getResolver("findByIds"),
+  userOne: UserTC.getResolver("findOne"),
+  userMany: UserTC.getResolver("findMany"),
+  userCount: UserTC.getResolver("count"),
+  userConnection: UserTC.getResolver("connection"),
+  userPagination: UserTC.getResolver("pagination"),
   login: UserTC.getResolver("login"),
 };
 
