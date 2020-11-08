@@ -30,10 +30,10 @@ const app = (0, _express2.default)();
 const server = new _apolloServerExpress.ApolloServer({
   schema: _schema2.default,
   cors: true,
-  playground: process.env.NODE_ENV === 'development' ? true : false,
+  playground: process.env.NODE_ENV === "development" ? true : false,
   introspection: true,
   tracing: true,
-  path: '/',
+  path: "/",
   context: ({
     req
   }) => {
@@ -53,7 +53,7 @@ const server = new _apolloServerExpress.ApolloServer({
 });
 server.applyMiddleware({
   app,
-  path: '/',
+  path: "/",
   cors: true,
   onHealthCheck: () => // eslint-disable-next-line no-undef
   new Promise((resolve, reject) => {

@@ -27,6 +27,10 @@ const FamilySchema = new _mongoose.Schema({
   "its_id": Number,
   "dob": String
 });
+const AddressSchema = new _mongoose.Schema({
+  building: String,
+  roomNo: String
+});
 const UserSchema = exports.UserSchema = new _mongoose.Schema({
   its_id: {
     type: Number,
@@ -34,16 +38,13 @@ const UserSchema = exports.UserSchema = new _mongoose.Schema({
     required: true
   },
   first_name: {
-    type: String,
-    required: true
+    type: String
   },
   last_name: {
-    type: String,
-    required: true
+    type: String
   },
   address: {
-    type: String,
-    required: true
+    type: AddressSchema
   },
   password: {
     type: String,
@@ -53,8 +54,7 @@ const UserSchema = exports.UserSchema = new _mongoose.Schema({
     type: Number,
     lowercase: true,
     trim: true,
-    unique: true,
-    required: true
+    unique: true
   },
   user_creation_status: {
     type: Boolean,
@@ -70,6 +70,7 @@ const UserSchema = exports.UserSchema = new _mongoose.Schema({
     enum: ['SMALL', 'MEDIUM', 'LARGE']
   },
   family: [FamilySchema],
+  familyCount: Number,
   jamaat: {
     type: _mongoose.Schema.Types.ObjectId,
     ref: 'Jamaat'

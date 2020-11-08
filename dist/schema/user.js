@@ -35,21 +35,26 @@ const {
   GraphQLUpload
 } = require("graphql-upload");
 
+const {
+  ApolloServer,
+  gql
+} = require("apollo-server");
+
 const AuthorizationDataSchema = `
     type AuthorizationData {
         token: String!
     }
-`;
-const fileInputSchema = `
-input fileInputSchema {
-    file : Upload!
-}
-`;
-const FileOutputSchema = `
-    type fileSchema {
-        messege: String
-    }
-`;
+`; // const fileInputSchema = `
+// input fileInputSchema {
+//     file : File!
+// }
+// `;
+// const FileOutputSchema = `
+//     type fileSchema {
+//         messege: String
+//     }
+// `;
+
 const LoginCredentialsInput = `
 input LoginCredentials {
     its_id : Int!
@@ -85,25 +90,19 @@ _user.UserTC.addResolver({
       throw "Authorization Failed";
     }
   }
-});
-
-_user.UserTC.addResolver({
-  kind: "mutation",
-  name: "uploadFile",
-  type: FileOutputSchema,
-  args: {
-    filter: fileInputSchema
-  },
-  resolve: async ({
-    args,
-    context
-  }) => {
-    console.log(args);
-    return {
-      messege: "ok"
-    };
-  }
 }); // UserTC.addResolver({
+//   kind: "mutation",
+//   name: "uploadFile",
+//   type: FileOutputSchema,
+//   args: {
+//     filter: fileInputSchema,
+//   },
+//   resolve: async ({ args, context }) => {
+//     console.log(args);
+//     return { messege: "ok" };
+//   },
+// });
+// UserTC.addResolver({
 //     kind: 'mutation',
 //     name: 'createIt',
 //     type: UserTC,
@@ -153,8 +152,8 @@ const UserMutation = {
   userUpdateMany: _user.UserTC.getResolver("updateMany"),
   userRemoveById: _user.UserTC.getResolver("removeById"),
   userRemoveOne: _user.UserTC.getResolver("removeOne"),
-  userRemoveMany: _user.UserTC.getResolver("removeMany"),
-  uploadFile: _user.UserTC.getResolver("uploadFile")
+  userRemoveMany: _user.UserTC.getResolver("removeMany") //   uploadFile: UserTC.getResolver("uploadFile"),
+
 };
 exports.UserQuery = UserQuery;
 exports.UserMutation = UserMutation;
